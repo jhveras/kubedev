@@ -1,0 +1,11 @@
+---
+
+dependencies_pkg:
+  - yum-utils
+  - device-mapper-persistent-data
+  - lvm2
+
+docker_pkg:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io

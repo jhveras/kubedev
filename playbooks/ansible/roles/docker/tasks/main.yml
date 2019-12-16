@@ -1,0 +1,90 @@
+---
+
+- name: Installing docker dependencies
+  yum:
+    name: "{{ dependencies_pkg }}"
+    state: present
+
+- name: Creating docker install script
+  template:
+    src: install_repo.sh
+    dest: /home/vagrant/install_repo.sh
+    owner: vagrant
+    group: wheel
+    mode: u=rx,g=r
+
+- name: Installing docker yum repository
+  command: /bin/bash /home/vagrant/install_repo.sh
+    
+- name: Installing docker
+  yum:
+    name: "{{ docker_pkg }}"
+    state: present
+
+- name: Starting docker
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+    # - name: Stopping docker service
+    #   systemd:
+    #     name: docker
+    #     state: stopped
+
+#- name: Creating partition for docker storage
+#  parted:
+#    device: /dev/sdb
+#    number: 1
+#    state: present
+
+- name: Creating volume group
+  lvg:
+    vg: vg_docker
+    pvs: /dev/sdb
+
+- name: Creating logical volume
+  lvol:
+    vg: vg_docker
+    lv: data
+    size: 100%VG
+
+- name: formatting partition
+  filesystem:
+    fstype: xfs
+    dev: /dev/mapper/vg_docker-data
+
+- name: Mounting docker filesystem
+  mount:
+    path: /var/lib/docker
+    src: /dev/mapper/vg_docker-data
+    fstype: xfs
+    state: mounted
+
+- name: Configuring docker daemon for kubernetes installation
+  template:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    #owner: docker
+    #group: docker
+    
+#- name: Configuring docker-storage-setup
+#  template:
+#    src: docker-storage-setup
+#    dest: /etc/sysconfig/docker-storage-setup
+    #owner: docker
+    #group: docker
+
+#- name: Executing docker-storage-setup
+#  command: docker-storage-setup
+
+- name: Restarting docker
+  systemd:
+    name: docker
+    state: restarted
+
+- name: Adding user vagrant to group docker
+  user:
+    name: vagrant
+    append: yes
+    groups: docker
