@@ -32,9 +32,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", run: "always", inline: <<-SHELL
-    sudo yum install python2-pip
-    sudo -u vagrant /usr/bin/pip install kubernetes --user
-    sudo -u vagrant /usr/bin/python /vagrant/pods.py
+    sudo yum install python3 -y
+    # sudo -u vagrant /usr/bin/pip install kubernetes --user
+    sudo -u vagrant /usr/bin/python3 /vagrant/pods.py
   SHELL
 
 end
