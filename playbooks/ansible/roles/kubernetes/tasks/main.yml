@@ -1,5 +1,10 @@
 ---
 
+- name: Creating dir for local persistence
+  ansible.builtin.file:
+    path: /mnt/data
+    state: directory
+    
 - name: Installing kubernetes yum repo
   template:
     src: kubernetes.repo
@@ -51,3 +56,44 @@
     mode: u=rw
     owner: vagrant
     group: vagrant
+
+- name: Copying Dagster helm values
+  copy:
+    src: values.yaml
+    dest: /home/vagrant/values.yaml
+    mode: u=rw
+    owner: vagrant
+    group: vagrant
+
+- name: Copying python script to list running pods
+  template:
+    src: local_pv.yaml
+    dest: /home/vagrant/local_pv.yaml
+    mode: u=rw
+    owner: vagrant
+    group: vagrant
+
+
+- name: Copying python script to list running pods
+  template:
+    src: pvc.yaml
+    dest: /home/vagrant/pvc.yaml
+    mode: u=rw
+    owner: vagrant
+    group: vagrant
+
+- name: Copying script to install helm and dagster
+  template:
+    src: install_dagster.sh
+    dest: /home/vagrant/install_dagster.sh
+    mode: u=rw
+    owner: vagrant
+    group: vagrant
+#
+#- name: Configuring kubernetes cluster
+#  command: /bin/bash /opt/create_cluster.sh
+#  become_user: vagrant
+#
+#- name: Configuring kubernetes cluster
+#  command: /bin/bash /opt/create_cluster.sh
+#  become_user: vagrant

@@ -20,8 +20,8 @@ Vagrant.configure("2") do |config|
       end
 
       vb.customize ['storageattach', :id,  '--storagectl', 'IDE', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', disk]
-      vb.memory = "2048"
-      vb.cpus   = "2"
+      vb.memory = "6144"
+      vb.cpus   = "4"
     end
   end
 

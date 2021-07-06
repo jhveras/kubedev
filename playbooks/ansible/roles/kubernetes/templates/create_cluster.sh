@@ -7,7 +7,8 @@ if [[ ! -f /home/vagrant/.kube/config ]]; then
   # System tasks
   sudo swapoff -a
   sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-  sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${LOCAL_IPADDR} --kubernetes-version=v1.17.0
+  # sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${LOCAL_IPADDR} --kubernetes-version=v1.17.0
+  sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${LOCAL_IPADDR}
   
   # Preparing user to use cluster
   mkdir -p $HOME/.kube

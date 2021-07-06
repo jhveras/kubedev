@@ -5,3 +5,5 @@ k8_pkg:
   - kubeadm
   - kubectl
   - python2-pip
+  - vim
+  - wget
