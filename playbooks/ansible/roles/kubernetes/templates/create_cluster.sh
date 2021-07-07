@@ -20,6 +20,9 @@ if [[ ! -f /home/vagrant/.kube/config ]]; then
   kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
   kubectl taint nodes --all node-role.kubernetes.io/master-
+
+  kubectl create -f /home/vagrant/local_pv.yaml
+  kubectl create -f /home/vagrant/pvc.yaml
 fi
 
 exit 0
