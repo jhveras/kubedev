@@ -1,0 +1,20 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: true
+
+  roles:
+#    - role: common
+#      tags:
+#        - common
+#        - install
+    
+    - role: docker
+      tags:
+        - docker
+        - install
+
+    - role: kubernetes
+      tags:
+        - kubernetes
+        - install

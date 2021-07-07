@@ -1,0 +1,9 @@
+---
+
+k8_pkg:
+  - kubelet
+  - kubeadm
+  - kubectl
+  - python2-pip
+  - vim
+  - wget
